@@ -64,9 +64,9 @@ const AdminRoute = ({ children }) => {
 };
 
 const SmtpRequiredRoute = ({ children }) => {
-  const { isAuthenticated, loading, isSmtpReady, smtpStatus } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
-  if (loading || smtpStatus?.loading) {
+  if (loading) {
     return (
       <div className="d-flex align-items-center justify-content-center min-vh-100">
         <div className="spinner-border text-primary" role="status">
@@ -78,10 +78,6 @@ const SmtpRequiredRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
-  }
-
-  if (!isSmtpReady) {
-    return <Navigate to="/dashboard" replace />;
   }
 
   return children;

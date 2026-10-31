@@ -29,35 +29,23 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
 
-  // Auto-prompt setup modal on dashboard when SMTP is not configured
-  useEffect(() => {
-    if (location.pathname === '/dashboard' && !isSmtpReady && !smtpStatus.loading) {
-      setShowSetupModal(true);
-    }
-  }, [location.pathname, isSmtpReady, smtpStatus.loading]);
-
   // Auto-close sidebar on navigation in mobile view
   useEffect(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
 
-  // If SMTP is not verified, show ONLY Dashboard and Settings (plus Admin console if admin)
-  const navItems = isSmtpReady
-    ? [
-        { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-        { label: 'HR Contacts', path: '/contacts', icon: Users },
-        { label: 'Import Excel/CSV', path: '/import', icon: FileSpreadsheet },
-        { label: 'Resume Manager', path: '/resumes', icon: FileText },
-        { label: 'Email Templates', path: '/templates', icon: Mail },
-        { label: 'Create Campaign', path: '/campaigns/new', icon: Send },
-        { label: 'Campaign History', path: '/campaigns', icon: History },
-        { label: 'Recipient Logs', path: '/logs', icon: ListFilter },
-        { label: 'Settings', path: '/settings', icon: Settings }
-      ]
-    : [
-        { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-        { label: 'Settings', path: '/settings', icon: Settings }
-      ];
+  // All navigation items are always available so users can manage contacts, templates, resumes, and WhatsApp
+  const navItems = [
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'HR Contacts', path: '/contacts', icon: Users },
+    { label: 'Import Excel/CSV', path: '/import', icon: FileSpreadsheet },
+    { label: 'Resume Manager', path: '/resumes', icon: FileText },
+    { label: 'Email Templates', path: '/templates', icon: Mail },
+    { label: 'Create Campaign', path: '/campaigns/new', icon: Send },
+    { label: 'Campaign History', path: '/campaigns', icon: History },
+    { label: 'Recipient Logs', path: '/logs', icon: ListFilter },
+    { label: 'Settings', path: '/settings', icon: Settings }
+  ];
 
   if (isAdmin) {
     navItems.push({
@@ -276,20 +264,20 @@ const DashboardLayout = () => {
 
         {/* Dynamic Outlet */}
         <main className="p-3 p-sm-4 flex-grow-1">
-          {/* SMTP Not Set Alert Banner */}
+          {/* SMTP Setup Suggestion Alert Banner (Non-blocking) */}
           {!isSmtpReady && !smtpStatus.loading && (
             <div className="alert alert-warning border-0 rounded-4 shadow-sm p-3 mb-4 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
               <div className="d-flex align-items-center gap-2.5">
                 <AlertCircle size={22} className="text-warning flex-shrink-0" />
                 <div>
-                  <div className="fw-bold text-dark small">Action Required: Gmail SMTP Activation</div>
+                  <div className="fw-bold text-dark small">Gmail SMTP App Password Recommended</div>
                   <div className="text-muted" style={{ fontSize: '0.775rem' }}>
-                    All email features (Contacts, Templates, Resume Uploads & Campaigns) are locked until your personal Gmail SMTP is verified.
+                    Configure your 16-character Google App Password in Settings to dispatch bulk emails. HR Contacts, Excel Import, WhatsApp Outreach, Resumes & Templates are active and ready!
                   </div>
                 </div>
               </div>
               <NavLink to="/settings" className="btn btn-warning btn-sm px-3 py-1.5 fw-bold rounded-pill text-dark text-nowrap align-self-start align-self-sm-auto">
-                Set Up SMTP &rarr;
+                Configure in Settings &rarr;
               </NavLink>
             </div>
           )}
@@ -315,44 +303,40 @@ const DashboardLayout = () => {
             <span style={{ fontSize: '0.675rem', marginTop: 2 }}>Home</span>
           </NavLink>
 
-          {isSmtpReady && (
-            <>
-              <NavLink
-                to="/contacts"
-                className={({ isActive }) =>
-                  `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : 'text-secondary'}`
-                }
-              >
-                <Users size={20} />
-                <span style={{ fontSize: '0.675rem', marginTop: 2 }}>Contacts</span>
-              </NavLink>
+          <NavLink
+            to="/contacts"
+            className={({ isActive }) =>
+              `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : 'text-secondary'}`
+            }
+          >
+            <Users size={20} />
+            <span style={{ fontSize: '0.675rem', marginTop: 2 }}>Contacts</span>
+          </NavLink>
 
-              {/* Floating Action Button (New Campaign) */}
-              <NavLink
-                to="/campaigns/new"
-                className="btn btn-primary rounded-circle p-0 d-flex align-items-center justify-content-center shadow-lg"
-                style={{ width: 46, height: 46, marginTop: -18, border: '3px solid #ffffff' }}
-                title="Create Campaign"
-              >
-                <Send size={18} />
-              </NavLink>
+          {/* Floating Action Button (New Campaign) */}
+          <NavLink
+            to="/campaigns/new"
+            className="btn btn-primary rounded-circle p-0 d-flex align-items-center justify-content-center shadow-lg"
+            style={{ width: 46, height: 46, marginTop: -18, border: '3px solid #ffffff' }}
+            title="Create Campaign"
+          >
+            <Send size={18} />
+          </NavLink>
 
-              <NavLink
-                to="/campaigns"
-                className={({ isActive }) =>
-                  `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : 'text-secondary'}`
-                }
-              >
-                <History size={20} />
-                <span style={{ fontSize: '0.675rem', marginTop: 2 }}>History</span>
-              </NavLink>
-            </>
-          )}
+          <NavLink
+            to="/campaigns"
+            className={({ isActive }) =>
+              `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : 'text-secondary'}`
+            }
+          >
+            <History size={20} />
+            <span style={{ fontSize: '0.675rem', marginTop: 2 }}>History</span>
+          </NavLink>
 
           <NavLink
             to="/settings"
             className={({ isActive }) =>
-              `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : !isSmtpReady ? 'text-warning fw-bold' : 'text-secondary'}`
+              `btn btn-link text-decoration-none p-1 d-flex flex-column align-items-center border-0 ${isActive ? 'text-primary fw-bold' : 'text-secondary'}`
             }
           >
             <Settings size={20} />
