@@ -1,0 +1,16 @@
+{
+  "name": "hr-bulk-email-sender-portal",
+  "version": "1.0.0",
+  "description": "Production-ready full-stack HR Bulk Email Sender Portal",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "start:server": "cd server && npm start",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "test": "cd server && npm test"
+  },
+  "keywords": ["hr", "bulk-mailer", "nodemailer", "mysql", "react", "vite"],
+  "author": "Parmeshwar Durgist",
+  "license": "MIT"
+}
+

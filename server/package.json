@@ -1,0 +1,42 @@
+{
+  "name": "hr-bulk-email-sender-server",
+  "version": "1.0.0",
+  "description": "Backend API for HR Bulk Email Sender Portal",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node test/api.test.js",
+    "postinstall": "node patch-wwebjs.js"
+  },
+  "keywords": [
+    "email",
+    "bulk-mailer",
+    "hr",
+    "recruitment",
+    "nodemailer",
+    "mysql"
+  ],
+  "author": "Parmeshwar Durgist",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.10.0",
+    "nodemailer": "^6.9.13",
+    "qrcode": "^1.5.4",
+    "sanitize-html": "^2.13.0",
+    "whatsapp-web.js": "^1.34.7",
+    "xlsx": "^0.18.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2"
+  }
+}

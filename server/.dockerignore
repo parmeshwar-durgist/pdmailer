@@ -1,0 +1,8 @@
+node_modules
+.wwebjs_auth
+.wwebjs_cache
+uploads/*.pdf
+!uploads/.gitkeep
+.env
+.git
+
