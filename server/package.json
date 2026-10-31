@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "node test/api.test.js",
-    "postinstall": "node patch-wwebjs.js"
+    "postinstall": "node -e \"if (require('fs').existsSync('./patch-wwebjs.js')) require('./patch-wwebjs.js');\""
   },
   "keywords": [
     "email",

@@ -15,8 +15,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 WORKDIR /app
 
-# Copy dependency files
-COPY package*.json ./
+# Copy dependency files and patch script
+COPY package*.json patch-wwebjs.js ./
 RUN npm ci --omit=dev
 
 # Copy source code
